@@ -17,6 +17,7 @@
           background: #ddd;
           border-radius: 5px;
           margin: 20px 0;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
       }
       .slider-thumb {
           position: absolute;
@@ -26,9 +27,12 @@
           border-radius: 50%;
           cursor: pointer;
           top: -5px;
+          transition: background 0.3s ease, transform 0.2s ease;
       }
       .value-display {
           margin-top: 10px;
+          font-size: 18px;
+          font-weight: bold;
       }
   </style>
 </head>
@@ -49,10 +53,12 @@
 
   sliderThumb.addEventListener('mousedown', function(event) {
       isDragging = true;
+      sliderThumb.style.transform = 'scale(1.2)'; // Увеличение бегунка при захвате
   });
 
   document.addEventListener('mouseup', function() {
       isDragging = false;
+      sliderThumb.style.transform = 'scale(1)'; // Возвращение бегунка к нормальному размеру
   });
 
   document.addEventListener('mousemove', function(event) {
@@ -66,6 +72,10 @@
           const value = Math.round(percentage * 100); // Значение от 0 до 100
           sliderThumb.style.left = `${percentage * 100}%`;
           sliderValue.textContent = value;
+
+          // Изменение цвета бегунка в зависимости от значения
+          const color = `rgb(${value * 2.55}, ${255 - value * 2.55}, 0)`; // Градиент от зелёного до красного
+          sliderThumb.style.background = color;
       }
   });
 
